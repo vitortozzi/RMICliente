@@ -45,8 +45,9 @@ public class ViewListener implements ActionListener {
     }
 
     public void mapearAcoesBttnsJanelaConsultar() {
-        this.consulta.getBtnLocar().addActionListener(this);
-        this.consulta.getBtnRegistrarInteresse().addActionListener(this);
+        consulta.getBtnLocar().addActionListener(this);
+        consulta.getBtnRegistrarInteresse().addActionListener(this);
+        consulta.getBtnVoltar().addActionListener(this);
     }
     
     @Override
@@ -70,14 +71,18 @@ public class ViewListener implements ActionListener {
 //            }
 //        }
         if(e.getSource().equals(this.home.getjButton1())){
-            int rowIndex = home.getjTable1().getSelectedRow();
-            
+            int rowIndex = home.getjTable1().getSelectedRow();        
             if(rowIndex != -1){
                 String nomeEscolhido = (String) home.getjTable1().getModel().getValueAt(rowIndex, 0);
                 Carro temp = null;
                 for(Carro c: carros){
                     if(c.getModelo().equals(nomeEscolhido)){
-                        temp = c;
+                        try {
+                            temp = refServidor.getCarro(c.getId());
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(ViewListener.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                     }
                 }
                 if(temp!=null){
@@ -91,16 +96,21 @@ public class ViewListener implements ActionListener {
                         consulta.getBtnLocar().setEnabled(false);
                     }else{
                         consulta.gettStatus().setText("Disponível");
+                        consulta.getBtnLocar().setEnabled(true);
                     }
+                    mapearAcoesBttnsJanelaConsultar();
                 }
             }
+        }
+        else if(e.getSource().equals(consulta.getBtnVoltar())){
+            consulta.setVisible(false);
         }
         
     }
 
     private void populaTabela() throws RemoteException {
         DefaultTableModel model = (DefaultTableModel) home.getjTable1().getModel();
-        carros = refServidor.requestCarros();
+        carros = refServidor.getAllCarros();
         for(Carro c: carros){
             model.addRow(new Object[]{c.getModelo(),c.getPrecoDiaria()});
         }

@@ -20,6 +20,11 @@ public class JanelaConsulta extends javax.swing.JFrame {
      */
     public JanelaConsulta() {
         initComponents();
+        tPlaca.setEditable(false);
+        tStatus.setEditable(false);
+        tValor.setEditable(false);
+        tMarca.setEditable(false);
+        setDefaultCloseOperation(JanelaConsulta.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -42,6 +47,7 @@ public class JanelaConsulta extends javax.swing.JFrame {
         btnLocar = new javax.swing.JButton();
         lStatus = new javax.swing.JLabel();
         tStatus = new javax.swing.JTextField();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +79,8 @@ public class JanelaConsulta extends javax.swing.JFrame {
 
         lStatus.setText("Status");
 
+        btnVoltar.setText("Voltar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,32 +88,30 @@ public class JanelaConsulta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lModelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lModelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lPlaca)
-                                    .addComponent(lMarca))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tPlaca)
-                                    .addComponent(tMarca, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(72, 72, 72)
-                                        .addComponent(btnLocar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lValor)
-                                            .addComponent(lStatus))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tValor, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                                            .addComponent(tStatus)))))
-                            .addComponent(btnRegistrarInteresse))
-                        .addGap(0, 116, Short.MAX_VALUE)))
+                            .addComponent(lPlaca)
+                            .addComponent(lMarca))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tPlaca)
+                            .addComponent(tMarca, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lValor)
+                            .addComponent(lStatus))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tValor, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                            .addComponent(tStatus))
+                        .addGap(0, 116, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegistrarInteresse)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLocar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoltar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,7 +134,8 @@ public class JanelaConsulta extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrarInteresse)
-                    .addComponent(btnLocar))
+                    .addComponent(btnLocar)
+                    .addComponent(btnVoltar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -142,6 +149,10 @@ public class JanelaConsulta extends javax.swing.JFrame {
     private void tMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tMarcaActionPerformed
+
+    public JButton getBtnVoltar() {
+        return btnVoltar;
+    }
 
     public JTextField gettStatus() {
         return tStatus;
@@ -262,6 +273,7 @@ public class JanelaConsulta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLocar;
     private javax.swing.JButton btnRegistrarInteresse;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel lMarca;
     private javax.swing.JLabel lModelo;
     private javax.swing.JLabel lPlaca;

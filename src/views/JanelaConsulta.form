@@ -26,41 +26,35 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lModelo" alignment="1" max="32767" attributes="0"/>
+                  <Component id="lModelo" alignment="1" pref="380" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lPlaca" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lMarca" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tPlaca" max="32767" attributes="0"/>
-                                  <Component id="tMarca" pref="77" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                                      <Component id="btnLocar" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lValor" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lStatus" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="tValor" pref="72" max="32767" attributes="0"/>
-                                          <Component id="tStatus" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Component id="btnRegistrarInteresse" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lPlaca" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lMarca" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="tPlaca" max="32767" attributes="0"/>
+                          <Component id="tMarca" pref="77" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lValor" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="tValor" pref="72" max="32767" attributes="0"/>
+                          <Component id="tStatus" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="116" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="btnRegistrarInteresse" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnLocar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -90,6 +84,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnRegistrarInteresse" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnLocar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -149,6 +144,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tStatus">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnVoltar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Voltar"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
