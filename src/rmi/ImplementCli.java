@@ -5,8 +5,10 @@
  */
 package rmi;
 
+import entidades.Carro;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,9 +17,11 @@ import java.rmi.server.UnicastRemoteObject;
 public class ImplementCli extends UnicastRemoteObject implements InterfaceCli {
 
     InterfaceServ refServenteServ;
+    ViewListener view;
     
-    public ImplementCli(InterfaceServ refServenteServ) throws RemoteException {
+    public ImplementCli(InterfaceServ refServenteServ, ViewListener view) throws RemoteException {
         this.refServenteServ = refServenteServ;
+        this.view = view;
         refServenteServ.chamar("cliente mandando oi", this);
     }
     
@@ -26,5 +30,13 @@ public class ImplementCli extends UnicastRemoteObject implements InterfaceCli {
         System.out.println(msg);
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void atualizarLista(Carro c) throws RemoteException {
+        // Vai dar pau aqui, view nula
+        view.atualizaTabela(c);
+    }
+    
+    
     
 }
