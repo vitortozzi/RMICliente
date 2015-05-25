@@ -6,6 +6,7 @@
 package views;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 /**
@@ -27,6 +28,10 @@ public class HomeCliente extends javax.swing.JFrame {
 
     public JTable getjTable1() {
         return jTable1;
+    }
+    
+    public JLabel getjLabel1() {
+        return jLabel1;
     }
 
     /**
@@ -50,14 +55,14 @@ public class HomeCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Modelo", "Valor da Diária"
+                "Marca", "Modelo", "Placa", "Valor da Diária"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -72,6 +77,8 @@ public class HomeCliente extends javax.swing.JFrame {
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -160,4 +167,5 @@ public class HomeCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
 }

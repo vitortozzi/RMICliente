@@ -1,47 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-/**
- *
- * @author a1260421
- */
+/* 
+    Classe inicial do Cliente
+    Tem as seguintes funções:
+        - instanciar o(s) cliente(s) do sistema
+        - capturar a referência do servidor registrada no Serviço de Nomes
+        - passar a referência da interface do servidor para o(s) cliente(s)
+*/
 public class Cliente {
     
+    /* construtor vazio */
     public Cliente() {}                                                                                                                                                                                                                                                                                                                                    
     
+    /* método main, esse classa deve ser executada APÓS o servidor */
     public static void main(String[] args) throws RemoteException {
         try {
+            /* capturar o serviço de nomes, iniciado pelo servidor na porta 9898 */
             Registry referenciaServicoNomes = LocateRegistry.getRegistry(9898);
+            
+            /* procurar no serviço de nomes a referência do servidor, com o nome ServentServ */
             InterfaceServ refServenteServidor = (InterfaceServ) referenciaServicoNomes.lookup("ServenteServ");
-            
-            // Aqui ta rolando uma treta.
-//            Na ViewListener, precisamos enviar uma referencia do cliente que está nessa classe, pra quando chamar
-//            algum método do servidor, ele usar essa referencia pra se identificar (ex: regfistrar interesse)
-//            
-//            O problema é que quando a referencia serventeCli precisa de uma referencia à view (ViewListener) pois são os métodos nessa classe que
-//            o servidor vai chamar (ex alterar preçoDiaria) então para alterar dados da view, precisa de uma referencia
-//                    
-//            Resumindo: 
-//            ViewListener depende da referincia do cliente
-//            Referencia do cliente depende da view
-//                    
-//            Até tentei criar a viewListener nula, entao teoricamente se eu instanciasse esse objeto depois, ele seria atualizado pra qualquer
-//            que eu tenha mandado ele. Pois não foi o que acontecer, o método atualizarLista do ImplementCli quando
-//            tenta acessar a view (referencia pra ViewListener) essa referencia está nula. Aí não atualiza porra nenhuma
-//            na view do cliente.
-                           
-            
-//            ViewListener viewListener = null;
-            ImplementCli serventeCli = new ImplementCli(refServenteServidor);
-//            viewListener = new ViewListener(refServenteServidor, serventeCli);
+
+            /* instanciar o(s) cliente(s) do sistema, passando a referência do servidor e iniciando os dados do(s) cliente(s),
+                com id e nome */
+            ImplementCli serventeCli1 = new ImplementCli(refServenteServidor, 111, "Fulano");
+            ImplementCli serventeCli2 = new ImplementCli(refServenteServidor, 222, "Sicrano");
+            ImplementCli serventeCli3 = new ImplementCli(refServenteServidor, 333, "Beltrano");
             
         } catch (Exception e) {
             System.out.println("erro: " + e.getMessage());

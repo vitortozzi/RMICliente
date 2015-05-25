@@ -17,12 +17,12 @@ import views.HomeCliente;
 import views.JanelaConsulta;
 import views.JanelaLocacao;
 
+/* Classe que controla os eventos das views */
 public class ViewListener implements ActionListener {
 
     private InterfaceCli refCliente;
     private InterfaceServ refServidor;
 
-    //private JanelaPrincipal principal;
     private HomeCliente home;
     private JanelaConsulta consulta;
     private JanelaLocacao janelaLocacao;
@@ -33,16 +33,12 @@ public class ViewListener implements ActionListener {
         this.refCliente = refCliente;
         this.refServidor = refServidor;
 
-//        this.principal = new JanelaPrincipal();
         this.home = new HomeCliente();
-//        this.principal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.home.getjLabel1().setText("Locação de Carros - " + this.refCliente.getNomeCliente());
         this.home.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        this.principal.setVisible(true);
         this.home.setVisible(true);
 
-//        this.principal.getjButton1().addActionListener(this);
         this.home.getjButton1().addActionListener(this);
-//        this.principal.getjButton2().addActionListener(this);
         populaTabela();
 
         consulta = new JanelaConsulta();
@@ -67,10 +63,10 @@ public class ViewListener implements ActionListener {
         if (e.getSource() == this.home.getjButton1()) {
             int rowIndex = home.getjTable1().getSelectedRow();
             if (rowIndex != -1) {
-                String nomeEscolhido = (String) home.getjTable1().getModel().getValueAt(rowIndex, 0);
+                String placaEscolhido = (String) home.getjTable1().getModel().getValueAt(rowIndex, 2);
 
                 for (Carro c : carros) {
-                    if (c.getModelo().equals(nomeEscolhido)) {
+                    if (c.getPlaca().equals(placaEscolhido)) {
                         try {
                             selectedCar = refServidor.getCarro(c.getId());
                         } catch (RemoteException ex) {
@@ -147,17 +143,17 @@ public class ViewListener implements ActionListener {
     }
 
     private void populaTabela() throws RemoteException {
-        DefaultTableModel model = (DefaultTableModel) home.getjTable1().getModel();
-        carros = refServidor.getAllCarros();
-        for (Carro c : carros) {
-            model.addRow(new Object[]{c.getModelo(), c.getPrecoDiaria()});
+        DefaultTableModel model = (DefaultTableModel) this.home.getjTable1().getModel();
+        this.carros = this.refServidor.getAllCarros();
+        for (Carro c : this.carros) {
+            model.addRow(new Object[]{c.getMarca(), c.getModelo(), c.getPlaca(), c.getPrecoDiaria()});
         }
     }
 
     public void atualizaTabela(Carro c) throws RemoteException {
         for (int i = 0; i < this.home.getjTable1().getRowCount(); i++) {
-            if(this.home.getjTable1().getValueAt(i, 0).equals(c.getModelo())){
-                this.home.getjTable1().setValueAt(c.getPrecoDiaria(), i, 1);
+            if(this.home.getjTable1().getValueAt(i, 2).equals(c.getPlaca())){
+                this.home.getjTable1().setValueAt(c.getPrecoDiaria(), i, 3);
             }
         }
     }
