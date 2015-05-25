@@ -135,8 +135,36 @@ public class ViewListener implements ActionListener {
             }
 
             int diffInDays = (int) ((devolucao.getTime() - retirada.getTime()) / (1000 * 60 * 60 * 24));
+            selectedCar.setLocalDevolucao(janelaLocacao.gettDevolucao().toString());
+            selectedCar.setLocalRetirada(janelaLocacao.gettRetirada().toString());
+            String msg = "Valor da diária do veículo: R$ " + selectedCar.getPrecoDiaria() + "\nValor total do aluguél: R$ " + diffInDays * selectedCar.getPrecoDiaria()
+                    + "\nDias de locação: " + diffInDays + " dias"
+                    + "\nForma de pagamento: ";
+            if (janelaLocacao.getrVista().isSelected()) {
+                msg = msg + "à Vista\nTotal: R$ " + diffInDays * selectedCar.getPrecoDiaria();
+            } else {
+                int parcelas;
+                parcelas = Integer.parseInt(janelaLocacao.getcParcelamento().getSelectedItem().toString().substring(0, 1));
+                double valorParcelado = (diffInDays * selectedCar.getPrecoDiaria()) / (parcelas);
+                msg = msg + "Cartão de Crédito\n" + janelaLocacao.getcParcelamento().getSelectedItem() + " de R$ " + valorParcelado;
+            }
+            int resultDialog = JOptionPane.showConfirmDialog(janelaLocacao, msg, "Locação", JOptionPane.YES_NO_OPTION);
 
-            JOptionPane.showMessageDialog(janelaLocacao, "Dias para locação: " + diffInDays);
+            if (resultDialog == JOptionPane.YES_OPTION){
+                boolean result = false;
+                try {
+                    result = refServidor.locarCarro(selectedCar, refCliente);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ViewListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (result) {
+                    JOptionPane.showMessageDialog(janelaLocacao, "Locação realizada com sucesso!");
+                    janelaLocacao.setVisible(false);
+                    consulta.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(janelaLocacao, "Não foi possível registrar a locação\n!");
+                }
+            }
 
         }
 
@@ -152,9 +180,11 @@ public class ViewListener implements ActionListener {
 
     public void atualizaTabela(Carro c) throws RemoteException {
         for (int i = 0; i < this.home.getjTable1().getRowCount(); i++) {
-            if(this.home.getjTable1().getValueAt(i, 2).equals(c.getPlaca())){
+            if (this.home.getjTable1().getValueAt(i, 2).equals(c.getPlaca())) {
                 this.home.getjTable1().setValueAt(c.getPrecoDiaria(), i, 3);
             }
         }
+        JOptionPane.showMessageDialog(home, this.refCliente.getNomeCliente() + ", o veículo " + c.getModelo() + " que você registrou interesse "
+                + "teve uma alteração no valor da diária.\nConfira a tabela de valores para mais detalhes.");
     }
 }

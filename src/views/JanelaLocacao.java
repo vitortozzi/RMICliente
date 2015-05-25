@@ -31,6 +31,7 @@ public class JanelaLocacao extends javax.swing.JFrame {
         ButtonGroup group = new ButtonGroup();
         group.add(rCartao);
         group.add(rVista);
+        rVista.setSelected(true);
         setDefaultCloseOperation(JanelaLocacao.DISPOSE_ON_CLOSE);
     }
 
