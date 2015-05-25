@@ -162,7 +162,10 @@ public class ViewListener implements ActionListener {
                     janelaLocacao.setVisible(false);
                     consulta.setVisible(false);
                 } else {
-                    JOptionPane.showMessageDialog(janelaLocacao, "Não foi possível registrar a locação\n!");
+                    JOptionPane.showMessageDialog(janelaLocacao, "Não foi possível registrar a locação\nTalvez o carro selecionado já tenha sido alugado."
+                            + " Tente consultar o veículo novamente!");
+                    janelaLocacao.setVisible(false);
+                    consulta.setVisible(false);
                 }
             }
 
