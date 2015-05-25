@@ -39,9 +39,9 @@ public class Cliente {
 //            na view do cliente.
                            
             
-            ViewListener viewListener = null;
-            ImplementCli serventeCli = new ImplementCli(refServenteServidor, viewListener);          
-            viewListener = new ViewListener(refServenteServidor, serventeCli);
+//            ViewListener viewListener = null;
+            ImplementCli serventeCli = new ImplementCli(refServenteServidor);
+//            viewListener = new ViewListener(refServenteServidor, serventeCli);
             
         } catch (Exception e) {
             System.out.println("erro: " + e.getMessage());

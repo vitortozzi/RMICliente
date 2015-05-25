@@ -26,8 +26,8 @@ public class ViewListener implements ActionListener {
     private HomeCliente home;
     private JanelaConsulta consulta;
     private JanelaLocacao janelaLocacao;
-    ArrayList<Carro> carros;
-    Carro selectedCar = null;
+    private ArrayList<Carro> carros;
+    private Carro selectedCar = null;
 
     public ViewListener(InterfaceServ refServidor, InterfaceCli refCliente) throws RemoteException {
         this.refCliente = refCliente;
@@ -64,7 +64,7 @@ public class ViewListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource().equals(this.home.getjButton1())) {
+        if (e.getSource() == this.home.getjButton1()) {
             int rowIndex = home.getjTable1().getSelectedRow();
             if (rowIndex != -1) {
                 String nomeEscolhido = (String) home.getjTable1().getModel().getValueAt(rowIndex, 0);
@@ -80,6 +80,7 @@ public class ViewListener implements ActionListener {
                     }
                 }
                 if (selectedCar != null) {
+                    consulta = new JanelaConsulta();
                     consulta.getlModelo().setText(selectedCar.getModelo());
                     consulta.gettMarca().setText(selectedCar.getMarca());
                     consulta.gettValor().setText(String.valueOf(selectedCar.getPrecoDiaria()));
@@ -95,10 +96,12 @@ public class ViewListener implements ActionListener {
                     mapearAcoesBttnsJanelaConsultar();
                 }
             }
-        } else if (e.getSource().equals(consulta.getBtnVoltar())) {
-            consulta.setVisible(false);
+        } else if (e.getSource() == consulta.getBtnVoltar()) {
+//            consulta.setVisible(false);
+            consulta.dispose();
         } else if (e.getSource().equals(consulta.getBtnLocar())) {
             if (selectedCar != null) {
+                janelaLocacao = new JanelaLocacao();
                 janelaLocacao.gettModelo().setText(selectedCar.getModelo());
                 janelaLocacao.gettMarca().setText(selectedCar.getMarca());
                 janelaLocacao.gettValor().setText(String.valueOf(selectedCar.getPrecoDiaria()));
@@ -106,7 +109,7 @@ public class ViewListener implements ActionListener {
                 janelaLocacao.setVisible(true);
                 mapearAcoesBttnsJanelaLocar();
             }
-        } else if (e.getSource().equals(consulta.getBtnRegistrarInteresse())) {
+        } else if (e.getSource() == consulta.getBtnRegistrarInteresse()) {
             boolean result = false;
             try {
                 result = refServidor.registrarIntCarro(selectedCar.getId(), refCliente);
@@ -118,9 +121,10 @@ public class ViewListener implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(consulta, "Não foi possível registrar interesse no veículo");
             }
-        } else if (e.getSource().equals(janelaLocacao.getBtnCancelar())) {
-            janelaLocacao.setVisible(false);
-        } else if (e.getSource().equals(janelaLocacao.getBtnFinalizar())) {
+        } else if (e.getSource() == janelaLocacao.getBtnCancelar()) {
+//            janelaLocacao.setVisible(false);
+            janelaLocacao.dispose();
+        } else if (e.getSource() == janelaLocacao.getBtnFinalizar()) {
             String sRetirada = janelaLocacao.gettDataRetirada1().getText() + "/" + janelaLocacao.gettDataRetirada2().getText() + "/" + janelaLocacao.gettDataRetirada3().getText();
             String sDevolucao = janelaLocacao.gettDataDevolucao1().getText() + "/" + janelaLocacao.gettDataDevolucao2().getText() + "/" + janelaLocacao.gettDataDevolucao3().getText();
 
@@ -151,10 +155,9 @@ public class ViewListener implements ActionListener {
     }
 
     public void atualizaTabela(Carro c) throws RemoteException {
-        DefaultTableModel model = (DefaultTableModel) home.getjTable1().getModel();
-        for (int i = 0; i < model.getColumnCount(); i++) {
-            if(model.getValueAt(i, 0).equals(c.getMarca())){
-                model.setValueAt(c.getPrecoDiaria(), i, 0);
+        for (int i = 0; i < this.home.getjTable1().getRowCount(); i++) {
+            if(this.home.getjTable1().getValueAt(i, 0).equals(c.getModelo())){
+                this.home.getjTable1().setValueAt(c.getPrecoDiaria(), i, 1);
             }
         }
     }

@@ -12,12 +12,6 @@ import java.util.ArrayList;
     - locar carro
     - registrar interesse em carro 
 */
-
-/**
- *
- * @author 17409
- */
-
 public interface InterfaceServ extends Remote {
     
     public ArrayList<Carro> getAllCarros() throws RemoteException;

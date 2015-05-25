@@ -8,7 +8,6 @@ package rmi;
 import entidades.Carro;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 
 /**
  *
@@ -16,12 +15,13 @@ import java.util.ArrayList;
  */
 public class ImplementCli extends UnicastRemoteObject implements InterfaceCli {
 
-    InterfaceServ refServenteServ;
-    ViewListener view;
+    private InterfaceServ refServenteServ;
+    private ViewListener view;
     
-    public ImplementCli(InterfaceServ refServenteServ, ViewListener view) throws RemoteException {
+    public ImplementCli(InterfaceServ refServenteServ) throws RemoteException {
         this.refServenteServ = refServenteServ;
-        this.view = view;
+        this.view = new ViewListener(refServenteServ, this);
+
         refServenteServ.chamar("cliente mandando oi", this);
     }
     
@@ -32,8 +32,7 @@ public class ImplementCli extends UnicastRemoteObject implements InterfaceCli {
     }
 
     @Override
-    public void atualizarLista(Carro c) throws RemoteException {
-        // Vai dar pau aqui, view nula
+    public void receberNotificacao(Carro c) throws RemoteException {
         view.atualizaTabela(c);
     }
     
