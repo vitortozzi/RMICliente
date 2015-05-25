@@ -150,7 +150,7 @@ public class ViewListener implements ActionListener {
             }
             int resultDialog = JOptionPane.showConfirmDialog(janelaLocacao, msg, "Locação", JOptionPane.YES_NO_OPTION);
 
-            if (resultDialog == JOptionPane.YES_OPTION){
+            if (resultDialog == JOptionPane.YES_OPTION) {
                 boolean result = false;
                 try {
                     result = refServidor.locarCarro(selectedCar, refCliente);
@@ -181,13 +181,15 @@ public class ViewListener implements ActionListener {
         }
     }
 
-    public void atualizaTabela(Carro c) throws RemoteException {
+    public void atualizaTabela(Carro c, boolean flag) throws RemoteException {
         for (int i = 0; i < this.home.getjTable1().getRowCount(); i++) {
             if (this.home.getjTable1().getValueAt(i, 2).equals(c.getPlaca())) {
                 this.home.getjTable1().setValueAt(c.getPrecoDiaria(), i, 3);
             }
         }
-        JOptionPane.showMessageDialog(home, this.refCliente.getNomeCliente() + ", o veículo " + c.getModelo() + " que você registrou interesse "
-                + "teve uma alteração no valor da diária.\nConfira a tabela de valores para mais detalhes.");
+        if (flag) {
+            JOptionPane.showMessageDialog(home, this.refCliente.getNomeCliente() + ", o veículo " + c.getModelo() + " que você registrou interesse "
+                    + "teve uma redução no valor da diária!\nConfira a tabela de valores para mais detalhes.");
+        }
     }
 }

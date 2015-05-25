@@ -38,8 +38,8 @@ public class ImplementCli extends UnicastRemoteObject implements InterfaceCli {
     @Override
     /* método para receber notificações sobre a baixa do preço da diária de um Carro que o cliente
         havia registrado interesse no passado */
-    public void receberNotificacao(Carro c) throws RemoteException {
-        view.atualizaTabela(c);
+    public void receberNotificacao(Carro c, boolean desceValor) throws RemoteException {
+        view.atualizaTabela(c, desceValor);
     }
     
     @Override
