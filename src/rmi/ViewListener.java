@@ -20,13 +20,18 @@ import views.JanelaLocacao;
 /* Classe que controla os eventos das views */
 public class ViewListener implements ActionListener {
 
+    //Referencias à clientes e servidor
     private InterfaceCli refCliente;
     private InterfaceServ refServidor;
 
+//    Janelas
     private HomeCliente home;
     private JanelaConsulta consulta;
     private JanelaLocacao janelaLocacao;
+    
+//    Lista de carros
     private ArrayList<Carro> carros;
+//    Carro escolhido nas operações
     private Carro selectedCar = null;
 
     public ViewListener(InterfaceServ refServidor, InterfaceCli refCliente) throws RemoteException {
@@ -39,6 +44,7 @@ public class ViewListener implements ActionListener {
         this.home.setVisible(true);
 
         this.home.getjButton1().addActionListener(this);
+        //Recebe lista de carros do servidor
         populaTabela();
 
         consulta = new JanelaConsulta();
@@ -46,28 +52,33 @@ public class ViewListener implements ActionListener {
 
     }
 
+//    Mapeamento de Listeners
     public void mapearAcoesBttnsJanelaConsultar() {
         consulta.getBtnLocar().addActionListener(this);
         consulta.getBtnRegistrarInteresse().addActionListener(this);
         consulta.getBtnVoltar().addActionListener(this);
     }
 
+    //    Mapeamento de Listeners
     public void mapearAcoesBttnsJanelaLocar() {
         janelaLocacao.getBtnFinalizar().addActionListener(this);
         janelaLocacao.getBtnCancelar().addActionListener(this);
     }
 
+//    Eventos dos listeners
     @Override
     public void actionPerformed(ActionEvent e) {
 
+//        Botão consultar
         if (e.getSource() == this.home.getjButton1()) {
             int rowIndex = home.getjTable1().getSelectedRow();
             if (rowIndex != -1) {
                 String placaEscolhido = (String) home.getjTable1().getModel().getValueAt(rowIndex, 2);
-
+//                Procura pela placa selecionada na lista de carros
                 for (Carro c : carros) {
                     if (c.getPlaca().equals(placaEscolhido)) {
                         try {
+                            // Busca o carro com as informações atualizadas do servidor
                             selectedCar = refServidor.getCarro(c.getId());
                         } catch (RemoteException ex) {
                             Logger.getLogger(ViewListener.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,12 +87,14 @@ public class ViewListener implements ActionListener {
                     }
                 }
                 if (selectedCar != null) {
+//                    Preenche os dados da janela de consulta
                     consulta = new JanelaConsulta();
                     consulta.getlModelo().setText(selectedCar.getModelo());
                     consulta.gettMarca().setText(selectedCar.getMarca());
                     consulta.gettValor().setText(String.valueOf(selectedCar.getPrecoDiaria()));
                     consulta.gettPlaca().setText(selectedCar.getPlaca());
                     consulta.setVisible(true);
+//                    Disponibilidade do carro para ser alugado
                     if (!selectedCar.getDisponivel()) {
                         consulta.gettStatus().setText("Alugado");
                         consulta.getBtnLocar().setEnabled(false);
@@ -92,11 +105,14 @@ public class ViewListener implements ActionListener {
                     mapearAcoesBttnsJanelaConsultar();
                 }
             }
-        } else if (e.getSource() == consulta.getBtnVoltar()) {
-//            consulta.setVisible(false);
+        } 
+//        Botão Voltar da janela de consulta
+        else if (e.getSource() == consulta.getBtnVoltar()) {
             consulta.dispose();
+//            Botão fazer locação da janela de consulta
         } else if (e.getSource().equals(consulta.getBtnLocar())) {
             if (selectedCar != null) {
+//                Dados da janela de locação são preenchidos
                 janelaLocacao = new JanelaLocacao();
                 janelaLocacao.gettModelo().setText(selectedCar.getModelo());
                 janelaLocacao.gettMarca().setText(selectedCar.getMarca());
@@ -105,7 +121,9 @@ public class ViewListener implements ActionListener {
                 janelaLocacao.setVisible(true);
                 mapearAcoesBttnsJanelaLocar();
             }
-        } else if (e.getSource() == consulta.getBtnRegistrarInteresse()) {
+        } 
+//        Botão registrar Interesse
+        else if (e.getSource() == consulta.getBtnRegistrarInteresse()) {
             boolean result = false;
             try {
                 result = refServidor.registrarIntCarro(selectedCar.getId(), refCliente);
@@ -117,13 +135,17 @@ public class ViewListener implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(consulta, "Não foi possível registrar interesse no veículo");
             }
-        } else if (e.getSource() == janelaLocacao.getBtnCancelar()) {
-//            janelaLocacao.setVisible(false);
+        } 
+//        Botão cancelar na janela de locação
+        else if (e.getSource() == janelaLocacao.getBtnCancelar()) {
             janelaLocacao.dispose();
-        } else if (e.getSource() == janelaLocacao.getBtnFinalizar()) {
+        } 
+//        Botão finalizar locação na janela de locação
+        else if (e.getSource() == janelaLocacao.getBtnFinalizar()) {
+//            Recupera datas do campo
             String sRetirada = janelaLocacao.gettDataRetirada1().getText() + "/" + janelaLocacao.gettDataRetirada2().getText() + "/" + janelaLocacao.gettDataRetirada3().getText();
             String sDevolucao = janelaLocacao.gettDataDevolucao1().getText() + "/" + janelaLocacao.gettDataDevolucao2().getText() + "/" + janelaLocacao.gettDataDevolucao3().getText();
-
+//          Formatação das datas;
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date retirada = null;
             Date devolucao = null;
@@ -133,7 +155,7 @@ public class ViewListener implements ActionListener {
             } catch (ParseException ex) {
                 Logger.getLogger(ViewListener.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+//          Calculo de dias entre a retirada e devolução
             int diffInDays = (int) ((devolucao.getTime() - retirada.getTime()) / (1000 * 60 * 60 * 24));
             selectedCar.setLocalDevolucao(janelaLocacao.gettDevolucao().toString());
             selectedCar.setLocalRetirada(janelaLocacao.gettRetirada().toString());
@@ -142,14 +164,19 @@ public class ViewListener implements ActionListener {
                     + "\nForma de pagamento: ";
             if (janelaLocacao.getrVista().isSelected()) {
                 msg = msg + "à Vista\nTotal: R$ " + diffInDays * selectedCar.getPrecoDiaria();
-            } else {
+            } 
+            // Calculo do parcelamento (Caso tenha selecionado cartão de crédito)
+            else {
                 int parcelas;
+//                Quebra a string do combobox fornecendo a quantidade de parcelas
                 parcelas = Integer.parseInt(janelaLocacao.getcParcelamento().getSelectedItem().toString().substring(0, 1));
                 double valorParcelado = (diffInDays * selectedCar.getPrecoDiaria()) / (parcelas);
                 msg = msg + "Cartão de Crédito\n" + janelaLocacao.getcParcelamento().getSelectedItem() + " de R$ " + valorParcelado;
             }
+//            Diálogo para confirmação da operação
             int resultDialog = JOptionPane.showConfirmDialog(janelaLocacao, msg, "Locação", JOptionPane.YES_NO_OPTION);
 
+//            Caso prossiga com a locação
             if (resultDialog == JOptionPane.YES_OPTION) {
                 boolean result = false;
                 try {
@@ -157,6 +184,7 @@ public class ViewListener implements ActionListener {
                 } catch (RemoteException ex) {
                     Logger.getLogger(ViewListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                // Verificação de sucesso na locação
                 if (result) {
                     JOptionPane.showMessageDialog(janelaLocacao, "Locação realizada com sucesso!");
                     janelaLocacao.setVisible(false);
@@ -173,6 +201,7 @@ public class ViewListener implements ActionListener {
 
     }
 
+//    Preenche tabela com os carros do servidor
     private void populaTabela() throws RemoteException {
         DefaultTableModel model = (DefaultTableModel) this.home.getjTable1().getModel();
         this.carros = this.refServidor.getAllCarros();
@@ -180,7 +209,7 @@ public class ViewListener implements ActionListener {
             model.addRow(new Object[]{c.getMarca(), c.getModelo(), c.getPlaca(), c.getPrecoDiaria()});
         }
     }
-
+// Atualiza valor do preços de um carro
     public void atualizaTabela(Carro c, boolean flag) throws RemoteException {
         for (int i = 0; i < this.home.getjTable1().getRowCount(); i++) {
             if (this.home.getjTable1().getValueAt(i, 2).equals(c.getPlaca())) {
