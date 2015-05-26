@@ -159,7 +159,7 @@ public class ViewListener implements ActionListener {
             int diffInDays = (int) ((devolucao.getTime() - retirada.getTime()) / (1000 * 60 * 60 * 24));
             selectedCar.setLocalDevolucao(janelaLocacao.gettDevolucao().toString());
             selectedCar.setLocalRetirada(janelaLocacao.gettRetirada().toString());
-            String msg = "Valor da diária do veículo: R$ " + selectedCar.getPrecoDiaria() + "\nValor total do aluguél: R$ " + diffInDays * selectedCar.getPrecoDiaria()
+            String msg = "Valor da diária do veículo: R$ " + selectedCar.getPrecoDiaria() + "\nValor total do aluguel: R$ " + diffInDays * selectedCar.getPrecoDiaria()
                     + "\nDias de locação: " + diffInDays + " dias"
                     + "\nForma de pagamento: ";
             if (janelaLocacao.getrVista().isSelected()) {
